@@ -59,7 +59,7 @@ svg circle {
     fill: var(--red);
 }
 
-input {
+#operation_picker input {
     display: none;
 }
 
@@ -73,4 +73,34 @@ label {
 
 input:checked+label{
     opacity: 1;
+}
+
+#question {
+    text-align: center;
+    padding: 1em;
+    margin: 2em 1em;
+    border: 15px solid #FFF;
+    border-radius: 40px;
+}
+
+input[type=number] {
+    appearance: textfield;
+    width: 2.5em;
+    border: 0;
+    padding: .2em;
+    text-align: center;
+    font-size: 1.5rem;
+    vertical-align: middle;
+    border-radius: 9px;
+}
+
+input[type=number]:disabled {
+    color: inherit;
+    background: transparent;
+}
+
+#equals, #operator {
+    font-size: 2em;
+    padding: 0.5rem 0;
+    vertical-align: middle;
 }
