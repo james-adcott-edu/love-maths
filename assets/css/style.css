@@ -1,8 +1,8 @@
 :root {
-    --green: #44ff44;
-    --blue: #3344ff;
+    --green: #44cc44;
+    --blue: #3344cc;
     --yellow: #dddd33;
-    --red: #ff4444;
+    --red: #cc4444;
 }
 
 body {
@@ -19,6 +19,7 @@ main {
 
 #operation_picker {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     gap: 10px;
     padding: 1rem;
@@ -78,29 +79,48 @@ input:checked+label{
 #question {
     text-align: center;
     padding: 1em;
-    margin: 2em 1em;
-    border: 15px solid #FFF;
+    width: max-content;
+    margin: 2em auto;
+    border: 15px solid var(--green);
     border-radius: 40px;
+    background-color: #fff;
 }
 
 input[type=number] {
     appearance: textfield;
     width: 2.5em;
-    border: 0;
     padding: .2em;
     text-align: center;
     font-size: 1.5rem;
     vertical-align: middle;
     border-radius: 9px;
+    background-color: #ddd;
+    border: 2px solid rgba(0,0,0,.3);
 }
 
 input[type=number]:disabled {
     color: inherit;
     background: transparent;
+    border: 0;
 }
 
 #equals, #operator {
     font-size: 2em;
     padding: 0.5rem 0;
     vertical-align: middle;
+}
+
+#submitDiv {
+    margin-top: 1rem;
+}
+
+#submitDiv button {
+    background-color: var(--green);
+    border: 0;
+    padding: .5rem 1rem;
+    color: #fff;
+    text-shadow: 1px 1px 0 #000;
+    border-radius: 9px;
+    font-size: 1.2rem;
+    font-weight: bold;
 }
