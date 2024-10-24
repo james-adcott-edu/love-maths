@@ -48,7 +48,7 @@ const loveMaths = {
     },
     writeQuestion: function () {
         let questionData = this.generateQuestion();
-        let boxes = document.querySelectorAll('#question>input[type=number]');
+        let boxes = document.querySelectorAll('#question input[type=number]');
 
         let randBox = this.randomNum(0,2);
 
@@ -63,6 +63,11 @@ const loveMaths = {
             boxes[x].disabled = false;
             boxes[x].setAttribute('data-answer', questionData[x]);
         }
+    },
+    checkAnswer: function () {
+        let answerBox = getElem('input[data-answer]');
+        let response = answerBox.getAttribute('data-answer') == answerBox.value ? 'yay' : 'nay';
+        alert(response);
     },
     loadGame: function (name) {
          // set class of question, remove all other classes
@@ -105,6 +110,11 @@ const loveMaths = {
                 }
             });
         });
+
+        getElem('form').addEventListener('submit', e => {
+            e.preventDefault();
+            loveMaths.checkAnswer();
+        })
     }
 }
 
