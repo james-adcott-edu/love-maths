@@ -5,7 +5,7 @@ const loveMaths = {
     randomNum: function (min, max) {
         return Math.floor(Math.random() * (max-min+1)) + min;
     },
-    generateQuestion: function (questionType) {
+    generateQuestion: function (questionType = this.selectedGame) {
     // returns array: [operand1 (Int), operand2 (Int), answer (Int)]
         returnArray = [];
         if (questionType == 'add') {
@@ -46,6 +46,24 @@ const loveMaths = {
         }
         return returnArray;
     },
+    writeQuestion: function () {
+        let questionData = this.generateQuestion();
+        let boxes = document.querySelectorAll('#question>input[type=number]');
+
+        let randBox = this.randomNum(0,2);
+
+        for (let x=0; x<3; x++) {
+            if (x !== randBox) {
+                boxes[x].value = questionData[x];
+                boxes[x].disabled = true;
+                boxes[x].removeAttribute('data-answer');
+                continue;
+            }
+            boxes[x].value = '';
+            boxes[x].disabled = false;
+            boxes[x].setAttribute('data-answer', questionData[x]);
+        }
+    },
     loadGame: function (name) {
          // set class of question, remove all other classes
         getElem('#question').className = name;
@@ -68,6 +86,7 @@ const loveMaths = {
 
         // set current state
         this.selectedGame = name;
+        this.writeQuestion();
     },
     init: function () {
         if (getElem('input[name=operation]:checked')) {
