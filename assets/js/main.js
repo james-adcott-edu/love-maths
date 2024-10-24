@@ -68,12 +68,14 @@ const loveMaths = {
     checkAnswer: function () {
         let answerBox = getElem('input[data-answer]');
         if (answerBox.getAttribute('data-answer') == answerBox.value) {
-            alert('correct');
+            alert("Hey! You got it right! :D");
             this.incrementCounter('correct');
         } else {
-            alert('incorrect');
+            alert(`Nope. The correct answer was ${answerBox.getAttribute('data-answer')}!`);
             this.incrementCounter('incorrect');
         }
+
+        // refresh question
         this.writeQuestion();
     },
     incrementCounter: function (counter) {
