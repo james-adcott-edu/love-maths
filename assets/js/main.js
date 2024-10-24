@@ -2,8 +2,8 @@ const getElem = e => document.querySelector(e);
 
 const loveMaths = {
     selectedGame: 'add', // default in case input is not checked in HTML
-    randomNum: function (max) {
-        return Math.ceil(Math.random() * max)
+    randomNum: function (min, max) {
+        return Math.floor(Math.random() * (max-min+1)) + min;
     },
     generateQuestion: function (questionType) {
     // returns array: [operand1 (Int), operand2 (Int), answer (Int)]
@@ -14,12 +14,12 @@ const loveMaths = {
             let answer = returnArray.shift();
             returnArray.push(answer);
         } else if (questionType == 'subtract') {
-            returnArray.push(this.randomNum(100));
+            returnArray.push(this.randomNum(1, 100));
 
             // ensure both numbers aren't identical
             let secondNum;
             do {
-                secondNum = this.randomNum(100);
+                secondNum = this.randomNum(1, 100);
             } while (secondNum == returnArray[0]);
 
             // largest number first
@@ -33,9 +33,14 @@ const loveMaths = {
             returnArray.push(returnArray[0]-returnArray[1]);
 
         } else if (questionType == 'multiply') {
-
+            returnArray.push(this.randomNum(2,12));
+            returnArray.push(this.randomNum(2,12));
+            returnArray.push(returnArray[0]*returnArray[1]);
         } else if (questionType == 'divide') {
-
+            // rearrange multiply
+            returnArray = this.generateQuestion('multiply');
+            let answer = returnArray.pop();
+            returnArray.unshift(answer);
         } else {
             throw new Error('unknown question type');
         }
@@ -85,5 +90,3 @@ const loveMaths = {
 }
 
 loveMaths.init();
-console.log(loveMaths.generateQuestion('subtract'));
-console.log(loveMaths.generateQuestion('add'));
