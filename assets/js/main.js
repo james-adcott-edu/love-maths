@@ -78,7 +78,7 @@ const loveMaths = {
     },
     incrementCounter: function (counter) {
         let span = getElem('#'+counter+'>span');
-        let currentCount = parseInt(span.innerText)
+        let currentCount = parseInt(span.innerText);
         span.innerText = ++currentCount;
     },
     loadGame: function (name) {

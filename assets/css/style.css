@@ -164,3 +164,13 @@ input[type=number]:disabled {
     gap: 2em;
     padding-top: 1em;
 }
+
+#correct span {
+    color: green;
+    font-weight: bold;
+}
+
+#incorrect span {
+    color: red;
+    font-weight: bold;
+}
