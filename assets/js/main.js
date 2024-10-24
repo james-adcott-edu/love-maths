@@ -69,10 +69,17 @@ const loveMaths = {
         let answerBox = getElem('input[data-answer]');
         if (answerBox.getAttribute('data-answer') == answerBox.value) {
             alert('correct');
+            this.incrementCounter('correct');
         } else {
             alert('incorrect');
+            this.incrementCounter('incorrect');
         }
         this.writeQuestion();
+    },
+    incrementCounter: function (counter) {
+        let span = getElem('#'+counter+'>span');
+        let currentCount = parseInt(span.innerText)
+        span.innerText = ++currentCount;
     },
     loadGame: function (name) {
          // set class of question, remove all other classes
