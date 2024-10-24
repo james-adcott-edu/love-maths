@@ -62,12 +62,17 @@ const loveMaths = {
             boxes[x].value = '';
             boxes[x].disabled = false;
             boxes[x].setAttribute('data-answer', questionData[x]);
+            boxes[x].focus();
         }
     },
     checkAnswer: function () {
         let answerBox = getElem('input[data-answer]');
-        let response = answerBox.getAttribute('data-answer') == answerBox.value ? 'yay' : 'nay';
-        alert(response);
+        if (answerBox.getAttribute('data-answer') == answerBox.value) {
+            alert('correct');
+        } else {
+            alert('incorrect');
+        }
+        this.writeQuestion();
     },
     loadGame: function (name) {
          // set class of question, remove all other classes
