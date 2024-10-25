@@ -68,15 +68,24 @@ const loveMaths = {
     checkAnswer: function () {
         let answerBox = getElem('input[data-answer]');
         if (answerBox.getAttribute('data-answer') == answerBox.value) {
-            alert("Hey! You got it right! :D");
+            this.modal('Correct!');
             this.incrementCounter('correct');
         } else {
-            alert(`Nope. The correct answer was ${answerBox.getAttribute('data-answer')}!`);
+            this.modal(`Nope. The correct answer was ${answerBox.getAttribute('data-answer')}!`);
             this.incrementCounter('incorrect');
         }
 
         // refresh question
         this.writeQuestion();
+    },
+    modal: function (message) {
+        let modal = getElem('#modal');
+        let modalContent = getElem('#modal-content');
+        modalContent.innerText = message;
+        modal.style.display = 'block';
+        setTimeout(() => {
+            modal.style.display = 'none';
+        }, 3000);
     },
     incrementCounter: function (counter) {
         let span = getElem('#'+counter+'>span');
