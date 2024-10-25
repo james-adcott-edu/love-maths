@@ -102,13 +102,13 @@ const loveMaths = {
                 getElem('#operator').innerText = '+';
                 break;
             case 'subtract':
-                getElem('#operator').innerText = '-';
+                getElem('#operator').innerText = '−';
                 break;
             case 'multiply':
-                getElem('#operator').innerText = 'x';
+                getElem('#operator').innerText = '×';
                 break;
             case 'divide':
-                getElem('#operator').innerText = '/';
+                getElem('#operator').innerText = '÷';
                 break;
         }
 
