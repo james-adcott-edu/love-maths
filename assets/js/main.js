@@ -136,7 +136,7 @@ const loveMaths = {
 
         getElem('form').addEventListener('submit', e => {
             e.preventDefault();
-            loveMaths.checkAnswer();
+            if (getElem('input[data-answer]').value) loveMaths.checkAnswer();
         })
     }
 }
