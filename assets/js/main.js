@@ -67,7 +67,7 @@ const loveMaths = {
     },
     checkAnswer: function () {
         let answerBox = getElem('input[data-answer]');
-        if (answerBox.getAttribute('data-answer') == answerBox.value) {
+        if (parseInt(answerBox.getAttribute('data-answer')) == parseInt(answerBox.value)) {
             this.modal('Correct!');
             this.incrementCounter('correct');
         } else {
