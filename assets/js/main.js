@@ -68,21 +68,22 @@ const loveMaths = {
     checkAnswer: function () {
         let answerBox = getElem('input[data-answer]');
         if (parseInt(answerBox.getAttribute('data-answer')) == parseInt(answerBox.value)) {
-            this.modal('Correct!');
+            this.modal('Correct!', 'correctAnswer');
             this.incrementCounter('correct');
         } else {
-            this.modal(`Nope. The correct answer was ${answerBox.getAttribute('data-answer')}!`);
+            this.modal(`Nope. The correct answer was ${answerBox.getAttribute('data-answer')}!`, 'incorrectAnswer');
             this.incrementCounter('incorrect');
         }
 
         // refresh question
         this.writeQuestion();
     },
-    modal: function (message) {
+    modal: function (message, className = '') {
         let modal = getElem('#modal');
+        modal.className = className;
         let modalContent = getElem('#modal-content');
         modalContent.innerText = message;
-        modal.style.display = 'block';
+        modal.style.display = 'flex';
         setTimeout(() => {
             modal.style.display = 'none';
         }, 3000);
