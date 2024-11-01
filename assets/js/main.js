@@ -93,12 +93,12 @@ const loveMaths = {
         let currentCount = parseInt(span.innerText);
         span.innerText = ++currentCount;
     },
-    loadGame: function (name) {
+    loadGame: function () {
          // set class of question, remove all other classes
-        getElem('#question').className = name;
+        getElem('#question').className = this.selectedGame;
 
         // change operator
-        switch (name) {
+        switch (this.selectedGame) {
             case 'add':
                 getElem('#operator').innerText = '+';
                 break;
@@ -114,7 +114,6 @@ const loveMaths = {
         }
 
         // set current state
-        this.selectedGame = name;
         this.writeQuestion();
     },
     init: function () {
@@ -124,13 +123,14 @@ const loveMaths = {
             // set radio button corresponding to current game to checked 
             getElem('#radio_'+this.selectedGame).setAttribute('checked', true)
         }
-        this.loadGame(this.selectedGame);
+        this.loadGame();
 
         // game switching
         document.querySelectorAll('input[name=operation]').forEach(element => {
             element.addEventListener('change', () => {
                 if (element.value !== loveMaths.selectedGame) {
-                    loveMaths.loadGame(element.value);
+                    loveMaths.selectedGame = element.value;
+                    loveMaths.loadGame();
                 }
             });
         });
