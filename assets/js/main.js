@@ -95,7 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function incrementCounter(counter) {
-        let span = getElem('#'+counter+'>span');
+        let span = getElem(`#${counter}>span`);
         let currentCount = parseInt(span.innerText);
         span.innerText = ++currentCount;
     }
@@ -129,7 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
             selectedGame = getElem('input[name=operation]:checked').value;
         } else {
             // set radio button corresponding to current game to checked 
-            getElem('#radio_'+selectedGame).setAttribute('checked', true)
+            getElem(`#radio_${selectedGame}`).setAttribute('checked', true)
         }
         loadGame();
 
