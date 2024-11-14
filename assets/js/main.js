@@ -1,25 +1,27 @@
-const getElem = e => document.querySelector(e);
+document.addEventListener('DOMContentLoaded', () => {
 
-const loveMaths = {
-    selectedGame: 'add', // default in case input is not checked in HTML
-    randomNum: function (min, max) {
+    const getElem = e => document.querySelector(e);
+    let selectedGame = 'add'; // default in case input is not checked in HTML
+
+    function randomNum (min, max) {
         return Math.floor(Math.random() * (max-min+1)) + min;
-    },
-    generateQuestion: function (questionType = this.selectedGame) {
-    // returns array: [operand1 (Int), operand2 (Int), answer (Int)]
+    }
+
+    function generateQuestion(questionType=selectedGame) {
+        // returns array: [operand1 (Int), operand2 (Int), answer (Int)]
         returnArray = [];
         if (questionType == 'add') {
             // use subtract method to ensure the answer wont be over 100
-            returnArray = this.generateQuestion('subtract');
+            returnArray = generateQuestion('subtract');
             let answer = returnArray.shift();
             returnArray.push(answer);
         } else if (questionType == 'subtract') {
-            returnArray.push(this.randomNum(1, 100));
+            returnArray.push(randomNum(1, 100));
 
             // ensure both numbers aren't identical
             let secondNum;
             do {
-                secondNum = this.randomNum(1, 100);
+                secondNum = randomNum(1, 100);
             } while (secondNum == returnArray[0]);
 
             // largest number first
@@ -28,29 +30,30 @@ const loveMaths = {
             } else {
                 returnArray.push(secondNum);
             }
-            
+
             // add answer
             returnArray.push(returnArray[0]-returnArray[1]);
 
         } else if (questionType == 'multiply') {
-            returnArray.push(this.randomNum(2,12));
-            returnArray.push(this.randomNum(2,12));
+            returnArray.push(randomNum(2,12));
+            returnArray.push(randomNum(2,12));
             returnArray.push(returnArray[0]*returnArray[1]);
         } else if (questionType == 'divide') {
             // rearrange multiply
-            returnArray = this.generateQuestion('multiply');
+            returnArray = generateQuestion('multiply');
             let answer = returnArray.pop();
             returnArray.unshift(answer);
         } else {
             throw new Error('unknown question type');
         }
         return returnArray;
-    },
-    writeQuestion: function () {
-        let questionData = this.generateQuestion();
+    }
+
+    function writeQuestion() {
+        let questionData = generateQuestion();
         let boxes = document.querySelectorAll('#question input[type=number]');
 
-        let randBox = this.randomNum(0,2);
+        let randBox = randomNum(0,2);
 
         for (let x=0; x<3; x++) {
             if (x !== randBox) {
@@ -64,21 +67,23 @@ const loveMaths = {
             boxes[x].setAttribute('data-answer', questionData[x]);
             boxes[x].focus();
         }
-    },
-    checkAnswer: function () {
+    }
+
+    function checkAnswer() {
         let answerBox = getElem('input[data-answer]');
         if (parseInt(answerBox.getAttribute('data-answer')) == parseInt(answerBox.value)) {
-            this.modal('Correct!', 'correctAnswer');
-            this.incrementCounter('correct');
+            modal('Correct!', 'correctAnswer');
+            incrementCounter('correct');
         } else {
-            this.modal(`Nope. The correct answer was ${answerBox.getAttribute('data-answer')}!`, 'incorrectAnswer');
-            this.incrementCounter('incorrect');
+            modal(`Nope. The correct answer was ${answerBox.getAttribute('data-answer')}!`, 'incorrectAnswer');
+            incrementCounter('incorrect');
         }
 
         // refresh question
-        this.writeQuestion();
-    },
-    modal: function (message, className = '') {
+        writeQuestion();
+    }
+
+    function modal(message, className='') {
         let modal = getElem('#modal');
         modal.className = className;
         let modalContent = getElem('#modal-content');
@@ -87,18 +92,20 @@ const loveMaths = {
         setTimeout(() => {
             modal.style.display = 'none';
         }, 3000);
-    },
-    incrementCounter: function (counter) {
+    }
+
+    function incrementCounter(counter) {
         let span = getElem('#'+counter+'>span');
         let currentCount = parseInt(span.innerText);
         span.innerText = ++currentCount;
-    },
-    loadGame: function () {
-         // set class of question, remove all other classes
-        getElem('#question').className = this.selectedGame;
+    }
+
+    function loadGame() {
+        // set class of question, remove all other classes
+        getElem('#question').className = selectedGame;
 
         // change operator
-        switch (this.selectedGame) {
+        switch (selectedGame) {
             case 'add':
                 getElem('#operator').innerText = '+';
                 break;
@@ -114,32 +121,34 @@ const loveMaths = {
         }
 
         // set current state
-        this.writeQuestion();
-    },
-    init: function () {
+        writeQuestion();
+    }
+
+    function init() {
         if (getElem('input[name=operation]:checked')) {
-            this.selectedGame = getElem('input[name=operation]:checked').value;
+            selectedGame = getElem('input[name=operation]:checked').value;
         } else {
             // set radio button corresponding to current game to checked 
-            getElem('#radio_'+this.selectedGame).setAttribute('checked', true)
+            getElem('#radio_'+selectedGame).setAttribute('checked', true)
         }
-        this.loadGame();
+        loadGame();
 
         // game switching
         document.querySelectorAll('input[name=operation]').forEach(element => {
             element.addEventListener('change', () => {
-                if (element.value !== loveMaths.selectedGame) {
-                    loveMaths.selectedGame = element.value;
-                    loveMaths.loadGame();
+                if (element.value !== selectedGame) {
+                    selectedGame = element.value;
+                    loadGame();
                 }
             });
         });
 
         getElem('form').addEventListener('submit', e => {
             e.preventDefault();
-            if (getElem('input[data-answer]').value) loveMaths.checkAnswer();
+            if (getElem('input[data-answer]').value) checkAnswer();
         })
     }
-}
 
-loveMaths.init();
+    init();
+
+});
