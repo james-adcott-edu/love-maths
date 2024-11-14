@@ -1,5 +1,7 @@
 # Love Maths
 
+[deployed here](https://james-adcott-edu.github.io/love-maths/)
+
 Taking the walkthrough project as a design brief and coding myself from scratch
 
 - using hand-made SVG images instead of fontawesome
