@@ -9,12 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function generateQuestion(questionType=selectedGame) {
         // returns array: [operand1 (Int), operand2 (Int), answer (Int)]
         returnArray = [];
-        if (questionType == 'add') {
-            // use subtract method to ensure the answer wont be over 100
-            returnArray = generateQuestion('subtract');
-            let answer = returnArray.shift();
-            returnArray.push(answer);
-        } else if (questionType == 'subtract') {
+        if (questionType == 'subtract') {
             returnArray.push(randomNum(1, 100));
 
             // ensure both numbers aren't identical
@@ -32,13 +27,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // add answer
             returnArray.push(returnArray[0]-returnArray[1]);
-
+        } else if (questionType == 'add') {
+            // Just rearrange a subtraction question to ensure the answer wont be over 100
+            returnArray = generateQuestion('subtract');
+            let answer = returnArray.shift();
+            returnArray.push(answer);
         } else if (questionType == 'multiply') {
             returnArray.push(randomNum(2,12));
             returnArray.push(randomNum(2,12));
             returnArray.push(returnArray[0]*returnArray[1]);
         } else if (questionType == 'divide') {
-            // rearrange multiply
+            // just rearrange a multiply question
             returnArray = generateQuestion('multiply');
             let answer = returnArray.pop();
             returnArray.unshift(answer);
@@ -52,15 +51,18 @@ document.addEventListener('DOMContentLoaded', () => {
         let questionData = generateQuestion();
         let boxes = document.querySelectorAll('#question input[type=number]');
 
-        let randBox = randomNum(0,2);
+        let randBox = randomNum(0,2); // pick a random box to be the answer
 
         for (let x=0; x<3; x++) {
             if (x !== randBox) {
+                // question box
                 boxes[x].value = questionData[x];
                 boxes[x].disabled = true;
                 boxes[x].removeAttribute('data-answer');
                 continue;
             }
+
+            // answer box
             boxes[x].value = '';
             boxes[x].disabled = false;
             boxes[x].setAttribute('data-answer', questionData[x]);
@@ -83,6 +85,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function modal(message, className='') {
+        // this is a simple modal that displays a message for 3 seconds
+        // it's buggy.
         let modal = document.querySelector('#modal');
         modal.className = className;
         let modalContent = document.querySelector('#modal-content');
@@ -125,6 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function init() {
         if (document.querySelector('input[name=operation]:checked')) {
+            // if the question type is already checked, use that
             selectedGame = document.querySelector('input[name=operation]:checked').value;
         } else {
             // set radio button corresponding to current game to checked 
