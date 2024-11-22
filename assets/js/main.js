@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    const getElem = e => document.querySelector(e);
     let selectedGame = 'add'; // default in case input is not checked in HTML
 
     function randomNum (min, max) {
@@ -70,7 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function checkAnswer() {
-        let answerBox = getElem('input[data-answer]');
+        let answerBox = document.querySelector('input[data-answer]');
         if (parseInt(answerBox.getAttribute('data-answer')) == parseInt(answerBox.value)) {
             modal('Correct!', 'correctAnswer');
             incrementCounter('correct');
@@ -84,9 +83,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function modal(message, className='') {
-        let modal = getElem('#modal');
+        let modal = document.querySelector('#modal');
         modal.className = className;
-        let modalContent = getElem('#modal-content');
+        let modalContent = document.querySelector('#modal-content');
         modalContent.innerText = message;
         modal.style.display = 'flex';
         setTimeout(() => {
@@ -95,28 +94,28 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function incrementCounter(counter) {
-        let span = getElem(`#${counter}>span`);
+        let span = document.querySelector(`#${counter}>span`);
         let currentCount = parseInt(span.innerText);
         span.innerText = ++currentCount;
     }
 
     function loadGame() {
         // set class of question, remove all other classes
-        getElem('#question').className = selectedGame;
+        document.querySelector('#question').className = selectedGame;
 
         // change operator
         switch (selectedGame) {
             case 'add':
-                getElem('#operator').innerText = '+';
+                document.querySelector('#operator').innerText = '+';
                 break;
             case 'subtract':
-                getElem('#operator').innerText = '−';
+                document.querySelector('#operator').innerText = '−';
                 break;
             case 'multiply':
-                getElem('#operator').innerText = '×';
+                document.querySelector('#operator').innerText = '×';
                 break;
             case 'divide':
-                getElem('#operator').innerText = '÷';
+                document.querySelector('#operator').innerText = '÷';
                 break;
         }
 
@@ -125,11 +124,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function init() {
-        if (getElem('input[name=operation]:checked')) {
-            selectedGame = getElem('input[name=operation]:checked').value;
+        if (document.querySelector('input[name=operation]:checked')) {
+            selectedGame = document.querySelector('input[name=operation]:checked').value;
         } else {
             // set radio button corresponding to current game to checked 
-            getElem(`#radio_${selectedGame}`).setAttribute('checked', true)
+            document.querySelector(`#radio_${selectedGame}`).setAttribute('checked', true)
         }
         loadGame();
 
@@ -143,9 +142,9 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
 
-        getElem('form').addEventListener('submit', e => {
+        document.querySelector('form').addEventListener('submit', e => {
             e.preventDefault();
-            if (getElem('input[data-answer]').value) checkAnswer();
+            if (document.querySelector('input[data-answer]').value) checkAnswer();
         })
     }
 
